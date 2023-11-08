@@ -1,0 +1,12 @@
+{
+  "short_name": "Recorder",
+  "name": "Recorder Extension",
+  "description": "웹사이트 리코더 전용 익스텐션입니다",
+  "manifest_version": 3,
+  "version": "1.0.0",
+  "action": {
+    "default_icon": "favicon.ico",
+    "default_popup": "index.html",
+    "default_title": "Reacorder"
+  }
+}
