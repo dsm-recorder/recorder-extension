@@ -18,8 +18,14 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* 절대경로 */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["src", "postcss.config.js", "tailwind.config.js"],
+  "include": ["src", "postcss.config.cjs", "tailwind.config.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
