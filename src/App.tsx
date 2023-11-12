@@ -1,7 +1,12 @@
+import { Router } from 'react-chrome-extension-router';
+import LoginPage from './page/LoginPage';
+
 function App() {
   return (
-    <div>recoder 전용 익스텐션 입니당</div>
-  )
+    <Router>
+      <LoginPage />
+    </Router>
+  );
 }
 
-export default App
+export default App;
