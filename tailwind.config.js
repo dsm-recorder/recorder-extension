@@ -7,6 +7,7 @@ module.exports = {
       colors: {
         green: '#3CB371',
         background: '#DDDDDD',
+        greenHover: '#2C945B',
       },
     },
   },

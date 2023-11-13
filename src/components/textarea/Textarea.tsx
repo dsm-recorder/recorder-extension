@@ -1,4 +1,7 @@
 import DownloadIcon from '@/assets/Download.svg';
+import { InputType } from '@/interface/type';
+import { imageState } from '@/page/MainPage';
+import DeleteIcon from '@/assets/Delete.svg';
 
 interface ITextareaProps {
   label?: string;
@@ -6,9 +9,9 @@ interface ITextareaProps {
   placeholder?: string;
   name?: string;
   value?: string;
-  onChange?: () => void;
-  images?: string[];
-  onClickImages?: () => void;
+  onChange?: (e: InputType) => void;
+  images?: imageState[];
+  setImages?: React.Dispatch<React.SetStateAction<imageState[]>>;
 }
 
 const Textarea = ({
@@ -19,8 +22,31 @@ const Textarea = ({
   value,
   onChange,
   images,
-  onClickImages,
+  setImages,
 }: ITextareaProps) => {
+  const onChangeAddImages = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+    if (files && setImages) {
+      if (files.length === 0) {
+        return;
+      } else {
+        const reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+        reader.onload = () => {
+          setImages([
+            ...images!,
+            { renderer: reader.result as string, value: files[0] },
+          ]);
+        };
+      }
+    }
+  };
+
+  const onClickDeleteImage = (item: imageState) => {
+    const replaceImages = images?.filter((element) => element !== item);
+    setImages && setImages(replaceImages!);
+  };
+
   return (
     <div className='flex flex-col w-full gap-2 '>
       <div className='flex items-start justify-between'>
@@ -35,7 +61,7 @@ const Textarea = ({
               accept='image/*'
               className='hidden'
               type='file'
-              onChange={onClickImages}
+              onChange={onChangeAddImages}
             />
           </label>
         )}
@@ -52,9 +78,16 @@ const Textarea = ({
         <div className='absolute right-3 bottom-3'>{value?.length}/200</div>
       </div>
 
-      <div>
+      <div className='grid items-center grid-cols-4 gap-2 justify-items-center'>
         {images?.map((item) => (
-          <img src={item} />
+          <div key={item.renderer} className='relative'>
+            <img src={item.renderer} alt='img' />
+            <img
+              src={DeleteIcon}
+              className='absolute cursor-pointer right-1 top-1'
+              onClick={() => onClickDeleteImage(item)}
+            />
+          </div>
         ))}
       </div>
     </div>
