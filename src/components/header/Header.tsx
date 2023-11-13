@@ -10,9 +10,9 @@ const Header = ({
   const onSelectPrRecord = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setPrRecord({ ...prRecord, type: e.target.value as prType });
   };
-  
+
   return (
-    <div className='flex items-center justify-between w-full'>
+    <div className='flex items-center justify-between w-full mt-3'>
       <div className='relative'>
         <select
           value={prRecord.type}
