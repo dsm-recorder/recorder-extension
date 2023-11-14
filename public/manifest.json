@@ -8,5 +8,14 @@
     "default_icon": "favicon.ico",
     "default_popup": "index.html",
     "default_title": "Reacorder"
+  },
+  "permissions": ["activeTab", "tabs"],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+I",
+        "mac": "Command+I"
+      }
+    }
   }
 }
