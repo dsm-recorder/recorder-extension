@@ -1,17 +1,17 @@
+import { useState } from 'react';
 import Button from '@/components/button/Button';
 import Header from '@/components/header/Header';
 import Textarea from '@/components/textarea/Textarea';
 import { useInput } from '@/hook/useInput';
 import { TextareaLabel } from '@/constant/Header';
 import { PostPrRecordRequst } from '@/interface/type';
-import { useState } from 'react';
 
 export type imageState = {
   renderer: string;
   value: File;
 };
 
-const MainPage = () => {
+const MainPage = ({ prTitle }: { prTitle: string }) => {
   const {
     form: prRecord,
     setForm: setPrRecord,
@@ -25,7 +25,7 @@ const MainPage = () => {
   });
 
   const [images, setImages] = useState<imageState[]>([]);
-
+  console.log(prTitle);
   return (
     <div className='flex flex-col w-full h-full gap-5 p-3 overflow-scroll'>
       <Header
