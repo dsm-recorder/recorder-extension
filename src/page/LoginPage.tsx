@@ -5,12 +5,30 @@ import MainPage from './MainPage';
 import Button from '@/components/button/Button';
 
 const LoginPage = () => {
-  const [prTitle, setPrTitle] = useState('');
+  const [tabInfo, setTabInfo] = useState({ url: [''], title: '' });
 
   const getCurrentTabId = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      setPrTitle(tabs[0].title!);
+      console.log(tabs[0]);
+      setTabInfo({
+        url: tabs[0].url!.split('/'),
+        title: tabs[0].title!,
+      });
     });
+  };
+
+  const getAccessToken = () => {
+    chrome.cookies.get(
+      { url: 'http://localhost:3000', name: 'accessToken' },
+      (cookie) => {
+        if (cookie) {
+          goTo(MainPage, { tabInfo, cookie: cookie.value });
+        } else {
+          alert('웹페이지에서 로그인 후 이용해 주세요'),
+            window.open('http://localhost:3000');
+        }
+      }
+    );
   };
 
   document.addEventListener('DOMContentLoaded', () => getCurrentTabId());
@@ -20,7 +38,7 @@ const LoginPage = () => {
     <div className='flex flex-col items-center justify-center w-full gap-5 h-4/5'>
       <img className='w-20 h-20' src={LogoImg} alt='LogoImg' />
       <div className='text-base'>웹에서 로그인하여 서비스를 이용해보세요!</div>
-      <Button onClick={() => goTo(MainPage, { prTitle })}>로그인</Button>
+      <Button onClick={getAccessToken}>로그인</Button>
     </div>
   );
 };

@@ -9,7 +9,7 @@
     "default_popup": "index.html",
     "default_title": "Reacorder"
   },
-  "permissions": ["activeTab", "tabs"],
+  "permissions": ["activeTab", "tabs", "cookies"],
   "commands": {
     "_execute_action": {
       "suggested_key": {

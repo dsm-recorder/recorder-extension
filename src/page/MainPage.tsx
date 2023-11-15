@@ -11,7 +11,15 @@ export type imageState = {
   value: File;
 };
 
-const MainPage = ({ prTitle }: { prTitle: string }) => {
+interface IMainPageProps {
+  tabInfo: {
+    url: string[];
+    title: string;
+  };
+  cookie: string;
+}
+
+const MainPage = ({ tabInfo, cookie }: IMainPageProps) => {
   const {
     form: prRecord,
     setForm: setPrRecord,
@@ -23,9 +31,13 @@ const MainPage = ({ prTitle }: { prTitle: string }) => {
     type: 'NEW_FEATURE',
     importance: 50,
   });
-
+  console.log(tabInfo, cookie);
   const [images, setImages] = useState<imageState[]>([]);
-  console.log(prTitle);
+  const [prTitle] = tabInfo.title.split('·');
+
+  if (tabInfo.url[2] !== 'github.com' || tabInfo.url[5] !== 'pull') {
+    return <>여기가 아님</>;
+  }
   return (
     <div className='flex flex-col w-full h-full gap-5 p-3 overflow-scroll'>
       <Header
@@ -33,15 +45,13 @@ const MainPage = ({ prTitle }: { prTitle: string }) => {
         setPrRecord={setPrRecord}
         onChangePrRecord={onChangePrRecord}
       />
-      <div className='text-lg break-keep'>
-        marge: (#13) 오가니제이션과 오가니제이션 레포지토리 조회 api #20
-      </div>
+      <div className='text-lg break-keep'>{prTitle}</div>
       <Textarea
         isAddImage={true}
         images={images}
         setImages={setImages}
         label={TextareaLabel[prRecord.type]}
-        placeholder='이 Pr에 대해 설명을 해주세요'
+        placeholder='이 PR에 대해 설명해주세요'
         name='content'
         value={prRecord.content}
         onChange={onChangePrRecord}
