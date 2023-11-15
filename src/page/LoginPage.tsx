@@ -21,8 +21,7 @@ const LoginPage = () => {
       { url: 'http://localhost:3000', name: 'accessToken' },
       (cookie) => {
         if (cookie) {
-          chrome.storage.sync.set({ token: cookie.value });
-          goTo(MainPage, tabInfo);
+          goTo(MainPage, { tabInfo, token: cookie.value });
         } else {
           alert('웹페이지에서 로그인 후 이용해 주세요'),
             window.open('http://localhost:3000');

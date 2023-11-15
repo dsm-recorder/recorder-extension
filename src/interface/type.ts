@@ -8,6 +8,7 @@ export interface PostPrRecordRequst {
   solution: string;
   type: prType;
   importance: number;
+  attachmentUrls: string[];
 }
 
 export interface GetPrRecrdState {

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { goTo } from 'react-chrome-extension-router';
 import Button from '@/components/button/Button';
 import Header from '@/components/header/Header';
@@ -8,6 +7,8 @@ import NotAllowedPage from './NotAllowedPage';
 import { useInput } from '@/hook/useInput';
 import { TextareaLabel } from '@/constant/Header';
 import { PostPrRecordRequst } from '@/interface/type';
+import { GetRepositoryId } from '@/api/projects';
+import { PostPrRecord } from '@/api/pr-records';
 
 export type imageState = {
   renderer: string;
@@ -19,28 +20,39 @@ interface IMainPageProps {
     url: string[];
     title: string;
   };
-  cookie: string;
+  token: string;
 }
 
-const MainPage = ({ tabInfo, cookie }: IMainPageProps) => {
+const MainPage = ({ tabInfo, token }: IMainPageProps) => {
+  const [prTitle, prNumber, repoName] = tabInfo.title.split('·');
   const {
     form: prRecord,
     setForm: setPrRecord,
     onChange: onChangePrRecord,
   } = useInput<PostPrRecordRequst>({
-    title: '',
+    title: prTitle,
     content: '',
     solution: '',
     type: 'NEW_FEATURE',
     importance: 50,
+    attachmentUrls: [],
   });
-  console.log(tabInfo, cookie);
-  const [images, setImages] = useState<imageState[]>([]);
-  const [prTitle] = tabInfo.title.split('·');
 
   if (tabInfo.url[2] !== 'github.com' || tabInfo.url[5] !== 'pull') {
     return <NotAllowedPage />;
   }
+
+  const onClick = async () => {
+    try {
+      const repositoryId = await GetRepositoryId(repoName.trim(), token);
+      await PostPrRecord(repositoryId.projectId, prRecord, token).then(() =>
+        goTo(SuccessPage)
+      );
+    } catch (err) {
+      alert(err);
+    }
+  };
+
   return (
     <div className='flex flex-col w-full h-full gap-5 p-3 overflow-scroll'>
       <Header
@@ -48,27 +60,34 @@ const MainPage = ({ tabInfo, cookie }: IMainPageProps) => {
         setPrRecord={setPrRecord}
         onChangePrRecord={onChangePrRecord}
       />
-      <div className='text-lg break-keep'>{prTitle}</div>
+      <div className='text-lg break-keep'>
+        {prTitle}
+        <br />
+        {prNumber}
+      </div>
       <Textarea
         isAddImage={true}
-        images={images}
-        setImages={setImages}
         label={TextareaLabel[prRecord.type]}
         placeholder='이 PR에 대해 설명해주세요'
         name='content'
-        value={prRecord.content}
+        value={prRecord}
+        content={prRecord.content}
+        setValue={setPrRecord}
         onChange={onChangePrRecord}
       />
       {prRecord.type === 'BUG_FIX' && (
         <Textarea
+          isAddImage={false}
           label='버그 해결 방법'
           placeholder='어떻게 해결하였는지 작성하세요'
           name='solution'
-          value={prRecord.solution}
+          value={prRecord}
+          content={prRecord.solution}
+          setValue={setPrRecord}
           onChange={onChangePrRecord}
         />
       )}
-      <Button onClick={() => goTo(SuccessPage)}>기록 완료</Button>
+      <Button onClick={onClick}>기록 완료</Button>
     </div>
   );
 };
