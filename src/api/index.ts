@@ -5,26 +5,6 @@ export const instance = axios.create({
   timeout: 10000,
 });
 
-instance.interceptors.request.use(
-  (config) => {
-    let accessToken = null;
-    chrome.storage.sync.get('token', ({ token }) => {
-      accessToken = token;
-    });
-    const returnConfig = {
-      ...config,
-    };
-    console.log(accessToken);
-    if (accessToken) {
-      returnConfig.headers!['Authorization'] = `Bearer ${accessToken}`;
-    }
-    return returnConfig;
-  },
-  (error: AxiosError) => {
-    return Promise.reject(error);
-  }
-);
-
 instance.interceptors.response.use(
   async (response) => response,
   async (error: AxiosError<AxiosError>) => {
