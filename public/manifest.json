@@ -9,6 +9,7 @@
     "default_popup": "index.html",
     "default_title": "Reacorder"
   },
+  "host_permissions": ["http://localhost:3000/"],
   "permissions": ["activeTab", "tabs", "cookies"],
   "commands": {
     "_execute_action": {
