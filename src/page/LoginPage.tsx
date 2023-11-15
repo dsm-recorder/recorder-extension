@@ -9,7 +9,6 @@ const LoginPage = () => {
 
   const getCurrentTabId = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      console.log(tabs[0]);
       setTabInfo({
         url: tabs[0].url!.split('/'),
         title: tabs[0].title!,
@@ -22,7 +21,8 @@ const LoginPage = () => {
       { url: 'http://localhost:3000', name: 'accessToken' },
       (cookie) => {
         if (cookie) {
-          goTo(MainPage, { tabInfo, cookie: cookie.value });
+          chrome.storage.sync.set({ token: cookie.value });
+          goTo(MainPage, tabInfo);
         } else {
           alert('웹페이지에서 로그인 후 이용해 주세요'),
             window.open('http://localhost:3000');

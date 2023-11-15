@@ -10,7 +10,7 @@
     "default_title": "Reacorder"
   },
   "host_permissions": ["http://localhost:3000/"],
-  "permissions": ["activeTab", "tabs", "cookies"],
+  "permissions": ["activeTab", "tabs", "cookies", "storage"],
   "commands": {
     "_execute_action": {
       "suggested_key": {
