@@ -32,7 +32,7 @@ const MainPage = ({ tabInfo, token }: IMainPageProps) => {
   } = useInput<PostPrRecordRequst>({
     title: prTitle,
     content: '',
-    solution: '',
+    solution: null,
     type: 'NEW_FEATURE',
     importance: 50,
     attachmentUrls: [],

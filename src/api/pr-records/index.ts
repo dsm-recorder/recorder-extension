@@ -8,6 +8,9 @@ export const PostPrRecord = async (
   param: PostPrRecordRequst,
   accessToken: string
 ) => {
+  if (param.type !== 'BUG_FIX') {
+    param.solution = null;
+  }
   return await instance.post(`${ROUTER}/${projectId}`, param, {
     headers: {
       Authorization: `Bearer ${accessToken}`,

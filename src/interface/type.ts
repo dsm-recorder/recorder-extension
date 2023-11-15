@@ -5,7 +5,7 @@ export type prType = 'NEW_FEATURE' | 'BUG_FIX' | 'REFACTORING';
 export interface PostPrRecordRequst {
   title: string;
   content: string;
-  solution: string;
+  solution: string | null;
   type: prType;
   importance: number;
   attachmentUrls: string[];

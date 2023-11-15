@@ -9,7 +9,7 @@ interface ITextareaProps {
   placeholder: string;
   name: string;
   value: PostPrRecordRequst;
-  content: string;
+  content: string | null;
   setValue: React.Dispatch<React.SetStateAction<PostPrRecordRequst>>;
   onChange: (e: InputType) => void;
 }
@@ -71,7 +71,7 @@ const Textarea = ({
         <textarea
           className='text-base placeholder:text-base placeholder:text-gray-700 min-h-[200px] resize-none w-full p-2 bg-background rounded-md outline-none'
           name={name}
-          value={content}
+          value={content ?? ''}
           onChange={onChange}
           placeholder={placeholder}
         />
