@@ -49,7 +49,7 @@ const MainPage = ({ tabInfo, token }: IMainPageProps) => {
         goTo(SuccessPage)
       );
     } catch (err) {
-      alert(err);
+      alert('프로젝트 등록을 먼저 하셔야 합니다. 등록 후 시도해주세요');
     }
   };
 
