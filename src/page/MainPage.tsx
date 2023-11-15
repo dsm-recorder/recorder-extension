@@ -1,7 +1,10 @@
 import { useState } from 'react';
+import { goTo } from 'react-chrome-extension-router';
 import Button from '@/components/button/Button';
 import Header from '@/components/header/Header';
 import Textarea from '@/components/textarea/Textarea';
+import SuccessPage from './SuccessPage';
+import NotAllowedPage from './NotAllowedPage';
 import { useInput } from '@/hook/useInput';
 import { TextareaLabel } from '@/constant/Header';
 import { PostPrRecordRequst } from '@/interface/type';
@@ -36,7 +39,7 @@ const MainPage = ({ tabInfo, cookie }: IMainPageProps) => {
   const [prTitle] = tabInfo.title.split('·');
 
   if (tabInfo.url[2] !== 'github.com' || tabInfo.url[5] !== 'pull') {
-    return <>여기가 아님</>;
+    return <NotAllowedPage />;
   }
   return (
     <div className='flex flex-col w-full h-full gap-5 p-3 overflow-scroll'>
@@ -65,7 +68,7 @@ const MainPage = ({ tabInfo, cookie }: IMainPageProps) => {
           onChange={onChangePrRecord}
         />
       )}
-      <Button>기록 완료</Button>
+      <Button onClick={() => goTo(SuccessPage)}>기록 완료</Button>
     </div>
   );
 };
