@@ -30,7 +30,7 @@ const Header = ({
         />
       </div>
       <div className='flex flex-col items-center gap-3'>
-        <span className='text-sm'>중요도</span>
+        <span className='text-sm'>중요도: {prRecord.importance}</span>
         <input
           name='importance'
           value={prRecord.importance}

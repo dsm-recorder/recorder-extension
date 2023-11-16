@@ -3,7 +3,7 @@ import LoginPage from './page/LoginPage';
 
 function App() {
   return (
-    <Router>
+    <Router> 
       <LoginPage />
     </Router>
   );
