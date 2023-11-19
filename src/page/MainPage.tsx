@@ -30,7 +30,7 @@ const MainPage = ({ tabInfo, token }: IMainPageProps) => {
     setForm: setPrRecord,
     onChange: onChangePrRecord,
   } = useInput<PostPrRecordRequst>({
-    title: prTitle,
+    title: '',
     content: '',
     solution: null,
     type: 'NEW_FEATURE',
@@ -66,7 +66,19 @@ const MainPage = ({ tabInfo, token }: IMainPageProps) => {
         {prNumber}
       </div>
       <Textarea
+        isAddImage={false}
+        size='small'
+        label='PR 제목'
+        placeholder='이 PR의 제목을 입력해주세요'
+        name='title'
+        value={prRecord}
+        content={prRecord.title}
+        setValue={setPrRecord}
+        onChange={onChangePrRecord}
+      />
+      <Textarea
         isAddImage={true}
+        size='big'
         label={TextareaLabel[prRecord.type]}
         placeholder='이 PR에 대해 설명해주세요'
         name='content'
@@ -78,6 +90,7 @@ const MainPage = ({ tabInfo, token }: IMainPageProps) => {
       {prRecord.type === 'BUG_FIX' && (
         <Textarea
           isAddImage={false}
+          size='big'
           label='버그 해결 방법'
           placeholder='어떻게 해결하였는지 작성하세요'
           name='solution'

@@ -5,6 +5,7 @@ import { GetUploadedImg } from '@/api/images';
 
 interface ITextareaProps {
   label: string;
+  size: 'small' | 'big';
   isAddImage: boolean;
   placeholder: string;
   name: string;
@@ -16,6 +17,7 @@ interface ITextareaProps {
 
 const Textarea = ({
   label,
+  size,
   isAddImage,
   placeholder,
   name,
@@ -69,15 +71,19 @@ const Textarea = ({
 
       <div className='relative'>
         <textarea
-          className='text-base placeholder:text-base placeholder:text-gray-700 min-h-[200px] resize-none w-full p-2 bg-background rounded-md outline-none'
+          className={`text-base placeholder:text-base placeholder:text-gray-700 ${
+            size === 'small' ? 'min-h-[24px]' : 'min-h-[200px]'
+          } resize-none w-full p-2 bg-background rounded-md outline-none`}
           name={name}
           value={content ?? ''}
           onChange={onChange}
           placeholder={placeholder}
         />
-        <div className='absolute right-3 bottom-3'>
-          {value.content.length}/200
-        </div>
+        {size === 'big' && (
+          <div className='absolute right-3 bottom-3'>
+            {value.content.length}/200
+          </div>
+        )}
       </div>
 
       {isAddImage && (

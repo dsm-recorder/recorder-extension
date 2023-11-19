@@ -15,7 +15,6 @@ const LoginPage = () => {
       });
     });
   };
-
   const getAccessToken = () => {
     chrome.cookies.get(
       { url: 'http://localhost:3000', name: 'accessToken' },
