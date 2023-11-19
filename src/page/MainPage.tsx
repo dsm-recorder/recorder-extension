@@ -68,8 +68,8 @@ const MainPage = ({ tabInfo, token }: IMainPageProps) => {
       <Textarea
         isAddImage={false}
         size='small'
-        label='PR 제목'
-        placeholder='이 PR의 제목을 입력해주세요'
+        label='제목'
+        placeholder='제목을 입력해주세요'
         name='title'
         value={prRecord}
         content={prRecord.title}
